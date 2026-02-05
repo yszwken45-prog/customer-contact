@@ -12,7 +12,9 @@ import logging
 import sys
 import unicodedata
 from langchain_community.document_loaders import PyMuPDFLoader, Docx2txtLoader
-from langchain.text_splitter import CharacterTextSplitter
+# from langchain.text_splitter import CharacterTextSplitter
+# ドット(.)ではなくアンダースコア(_)になり、末尾にsがつきます
+from langchain_text_splitters import CharacterTextSplitter
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder, PromptTemplate
 from langchain.schema import HumanMessage, AIMessage
 from langchain_openai import OpenAIEmbeddings
