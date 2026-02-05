@@ -15,8 +15,12 @@ from langchain_community.document_loaders import PyMuPDFLoader, Docx2txtLoader
 # from langchain.text_splitter import CharacterTextSplitter
 # ドット(.)ではなくアンダースコア(_)になり、末尾にsがつきます
 from langchain_text_splitters import CharacterTextSplitter
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder, PromptTemplate
-from langchain.schema import HumanMessage, AIMessage
+# from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder, PromptTemplate
+# from langchain.schema import HumanMessage, AIMessage
+# .prompts ではなく _core.prompts に変更
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder, PromptTemplate
+# .schema ではなく _core.messages に変更
+from langchain_core.messages import HumanMessage, AIMessage
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
