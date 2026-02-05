@@ -1,10 +1,13 @@
 streamlit
-langchain>=0.1.0
-langchain-community>=0.0.10
-langchain-openai>=0.0.5
-langchain-text-splitters>=0.0.1
 openai
-google-search-results
-python-dotenv
 tiktoken
+python-dotenv
+google-search-results
 chromadb
+
+# --- ここが重要：互換性のあるバージョンセットを固定 ---
+langchain==0.1.20
+langchain-community==0.0.38
+langchain-openai==0.1.6
+langchain-text-splitters==0.0.1
+langchain-core==0.1.52
