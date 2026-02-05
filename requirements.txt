@@ -1,10 +1,10 @@
 streamlit
-python-dotenv
+langchain
+langchain-community
+langchain-openai
+langchain-text-splitters
 openai
 google-search-results
+python-dotenv
 tiktoken
-
-# LangChainを「0.2.0未満」に固定することで、古いimport文を有効にします
-langchain<0.2.0
-langchain-community<0.2.0
-langchain-openai<0.2.0
+chromadb
