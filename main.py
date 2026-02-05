@@ -5,6 +5,7 @@
 ############################################################
 # ライブラリの読み込み
 ############################################################
+import os
 from dotenv import load_dotenv
 import logging
 import streamlit as st
@@ -22,6 +23,11 @@ st.set_page_config(
 )
 
 load_dotenv()
+if "OPENAI_API_KEY" in st.secrets:
+    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+
+if "SERPAPI_API_KEY" in st.secrets:
+    os.environ["SERPAPI_API_KEY"] = st.secrets["SERPAPI_API_KEY"]
 
 logger = logging.getLogger(ct.LOGGER_NAME)
 
