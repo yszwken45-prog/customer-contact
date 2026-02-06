@@ -119,9 +119,9 @@ SEARCH_WEB_INFO_TOOL_NAME = "search_web_tool"
 SEARCH_WEB_INFO_TOOL_DESCRIPTION = "自社サービス「HealthX」に関する質問で、Web検索が必要と判断した場合に使う"
 
 # パスの定義
-DB_EMPLOYEE_PATH = "data/rag/employee"
-DB_COMPETITOR_PATH = "data/rag/competitor"
-DB_LEGAL_PATH = "data/rag/legal"
+DB_EMPLOYEE_PATH = "data/rag/company"
+DB_COMPETITOR_PATH = "data/rag/company"
+DB_LEGAL_PATH = "data/rag/company"
 
 # ツール名と説明文の定義
 SEARCH_EMPLOYEE_INFO_TOOL_NAME = "search_employee_info_tool"
