@@ -16,3 +16,4 @@ sudachidict-core
 python-docx
 pymupdf
 docx2txt
+slack_sdk
