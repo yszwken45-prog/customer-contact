@@ -350,7 +350,8 @@ def notice_slack(chat_message):
     agent_executor = initialize_agent(
         llm=st.session_state.llm,
         tools=tools,
-        agent=AgentType.STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION
+        agent=AgentType.STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION,
+        handle_parsing_errors=True  # これを追加
     )
 
     # 担当者割り振りに使う用の「従業員情報」と「問い合わせ対応履歴」の読み込み
