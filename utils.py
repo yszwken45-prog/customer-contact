@@ -218,16 +218,6 @@ def run_customer_doc_chain(param):
     return ai_msg["answer"]
 
 
-def run_employee_doc_chain(query: str):
-    return st.session_state.employee_doc_chain.run(query)
-
-def run_competitor_doc_chain(query: str):
-    return st.session_state.competitor_doc_chain.run(query)
-
-def run_legal_doc_chain(query: str):
-    return st.session_state.legal_doc_chain.run(query)
-
-
 def delete_old_conversation_log(result):
     """
     古い会話履歴の削除

@@ -118,20 +118,6 @@ SEARCH_CUSTOMER_COMMUNICATION_INFO_TOOL_DESCRIPTION = "顧客とのやりとり�
 SEARCH_WEB_INFO_TOOL_NAME = "search_web_tool"
 SEARCH_WEB_INFO_TOOL_DESCRIPTION = "自社サービス「HealthX」に関する質問で、Web検索が必要と判断した場合に使う"
 
-# パスの定義
-DB_EMPLOYEE_PATH = "data/rag/company"
-DB_COMPETITOR_PATH = "data/rag/company"
-DB_LEGAL_PATH = "data/rag/company"
-
-# ツール名と説明文の定義
-SEARCH_EMPLOYEE_INFO_TOOL_NAME = "search_employee_info_tool"
-SEARCH_EMPLOYEE_INFO_TOOL_DESCRIPTION = "社内の従業員情報、スキル、担当業務などを参照したい時に使うTool"
-
-SEARCH_COMPETITOR_INFO_TOOL_NAME = "search_competitor_info_tool"
-SEARCH_COMPETITOR_INFO_TOOL_DESCRIPTION = "競合他社や市場調査レポートを参照したい時に使うTool"
-
-SEARCH_LEGAL_INFO_TOOL_NAME = "search_legal_info_tool"
-SEARCH_LEGAL_INFO_TOOL_DESCRIPTION = "社内規定、契約書雛形、法務コンプライアンス情報を参照したい時に使うTool"
 
 # ==========================================
 # Slack連携関連

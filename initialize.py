@@ -77,57 +77,28 @@ def initialize_session_id():
         st.session_state.session_id = uuid4().hex
 
 
-# def initialize_logger():
-#     """
-#     ログ出力の設定
-#     """
-#     os.makedirs(ct.LOG_DIR_PATH, exist_ok=True)
-
-#     logger = logging.getLogger(ct.LOGGER_NAME)
-
-#     if logger.hasHandlers():
-#         return
-
-#     log_handler = TimedRotatingFileHandler(
-#         os.path.join(ct.LOG_DIR_PATH, ct.LOG_FILE),
-#         when="D",
-#         encoding="utf8"
-#     )
-#     formatter = logging.Formatter(
-#         f"[%(levelname)s] %(asctime)s line %(lineno)s, in %(funcName)s, session_id={st.session_state.session_id}: %(message)s"
-#     )
-#     log_handler.setFormatter(formatter)
-#     logger.setLevel(logging.INFO)
-#     logger.addHandler(log_handler)
-
 def initialize_logger():
+    """
+    ログ出力の設定
+    """
     os.makedirs(ct.LOG_DIR_PATH, exist_ok=True)
+
     logger = logging.getLogger(ct.LOGGER_NAME)
 
-    # 既存のハンドラがある場合は一度クリアする（またはセッションIDを動的にする）
     if logger.hasHandlers():
-        logger.handlers.clear() 
+        return
 
     log_handler = TimedRotatingFileHandler(
         os.path.join(ct.LOG_DIR_PATH, ct.LOG_FILE),
         when="D",
         encoding="utf8"
     )
-    
-    # 最新のセッションIDを取得
-    sid = st.session_state.get("session_id", "unknown")
-    
     formatter = logging.Formatter(
-        f"[%(levelname)s] %(asctime)s line %(lineno)s, session_id={sid}: %(message)s"
+        f"[%(levelname)s] %(asctime)s line %(lineno)s, in %(funcName)s, session_id={st.session_state.session_id}: %(message)s"
     )
     log_handler.setFormatter(formatter)
     logger.setLevel(logging.INFO)
     logger.addHandler(log_handler)
-    
-    # ターミナルで見れるようにStreamHandlerも追加することを強く推奨します
-    console_handler = logging.StreamHandler()
-    console_handler.setFormatter(formatter)
-    logger.addHandler(console_handler)
 
 
 def initialize_agent_executor():
@@ -145,21 +116,14 @@ def initialize_agent_executor():
     
     st.session_state.llm = ChatOpenAI(model_name=ct.MODEL, temperature=ct.TEMPERATURE, streaming=True)
 
-    # --- 各Tool用のChainを作成 ---
-    # 既存のChain
+    # 各Tool用のChainを作成
     st.session_state.customer_doc_chain = utils.create_rag_chain(ct.DB_CUSTOMER_PATH)
     st.session_state.service_doc_chain = utils.create_rag_chain(ct.DB_SERVICE_PATH)
     st.session_state.company_doc_chain = utils.create_rag_chain(ct.DB_COMPANY_PATH)
     st.session_state.rag_chain = utils.create_rag_chain(ct.DB_ALL_PATH)
 
-    # 【追加】新規Tool用のChain
-    st.session_state.employee_doc_chain = utils.create_rag_chain(ct.DB_EMPLOYEE_PATH)     # 社員名簿
-    st.session_state.competitor_doc_chain = utils.create_rag_chain(ct.DB_COMPETITOR_PATH) # 競合調査
-    st.session_state.legal_doc_chain = utils.create_rag_chain(ct.DB_LEGAL_PATH)           # 法務規定
-
     # Web検索用のToolを設定するためのオブジェクトを用意
     search = SerpAPIWrapper()
-    
     # Agent Executorに渡すTool一覧を用意
     tools = [
         # 会社に関するデータ検索用のTool
@@ -185,28 +149,8 @@ def initialize_agent_executor():
             name = ct.SEARCH_WEB_INFO_TOOL_NAME,
             func=search.run,
             description=ct.SEARCH_WEB_INFO_TOOL_DESCRIPTION
-        ),
-        # 【追加】社内人材・組織に関するデータ検索用のTool
-        Tool(
-            name=ct.SEARCH_EMPLOYEE_INFO_TOOL_NAME,
-            func=utils.run_employee_doc_chain,
-            description=ct.SEARCH_EMPLOYEE_INFO_TOOL_DESCRIPTION
-        ),
-        # 【追加】競合他社・市場調査に関するデータ検索用のTool
-        Tool(
-            name=ct.SEARCH_COMPETITOR_INFO_TOOL_NAME,
-            func=utils.run_competitor_doc_chain,
-            description=ct.SEARCH_COMPETITOR_INFO_TOOL_DESCRIPTION
-        ),
-        # 【追加】法務・社内規定に関するデータ検索用のTool
-        Tool(
-            name=ct.SEARCH_LEGAL_INFO_TOOL_NAME,
-            func=utils.run_legal_doc_chain,
-            description=ct.SEARCH_LEGAL_INFO_TOOL_DESCRIPTION
         )
     ]
-
-    # (以下、AgentExecutorの作成処理などが続くと想定)
 
     # Agent Executorの作成
     st.session_state.agent_executor = initialize_agent(
