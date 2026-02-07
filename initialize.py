@@ -159,9 +159,9 @@ def initialize_agent_executor():
     st.session_state.rag_chain = utils.create_rag_chain(ct.DB_ALL_PATH)
 
     # 新規追加：それぞれのDBパスから専用のChainを作成
-    st.session_state.design_tech_doc_chain = utils.create_rag_chain(ct.DB_DESIGN_TECH_PATH)
-    st.session_state.compliance_doc_chain = utils.create_rag_chain(ct.DB_COMPLIANCE_PATH)
-    st.session_state.logistics_doc_chain = utils.create_rag_chain(ct.DB_LOGISTICS_PATH)
+    st.session_state.design_tech_doc_chain = utils.create_rag_chain(ct.DB_SERVICE_PATH)
+    st.session_state.compliance_doc_chain = utils.create_rag_chain(ct.DB_COMPANY_PATH)
+    st.session_state.logistics_doc_chain = utils.create_rag_chain(ct.DB_SERVICE_PATH)
 
     # Web検索用のToolを設定するためのオブジェクトを用意
     search = SerpAPIWrapper()
