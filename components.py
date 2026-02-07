@@ -30,22 +30,34 @@ def display_sidebar():
 
         col1, col2 = st.columns([100, 1])
         with col1:
+            # st.session_state.agent_mode = st.selectbox(
+            #     label="",
+            #     options=[ct.AI_AGENT_MODE_ON, ct.AI_AGENT_MODE_OFF],
+            #     label_visibility="collapsed"
+            # )
+
             st.session_state.agent_mode = st.selectbox(
-                label="",
-                options=[ct.AI_AGENT_MODE_ON, ct.AI_AGENT_MODE_OFF],
-                label_visibility="collapsed"
+            label="エージェントモード", # 意味のあるラベルを付ける
+            options=[ct.AI_AGENT_MODE_ON, ct.AI_AGENT_MODE_OFF] ,
+            label_visibility="collapsed" # 画面上の見た目を変えたくない場合はこれを追加
             )
         
         st.markdown("## 問い合わせモード")
 
         col1, col2 = st.columns([100, 1])
         with col1:
-            st.session_state.contact_mode = st.selectbox(
-                label="",
-                options=[ct.CONTACT_MODE_OFF, ct.CONTACT_MODE_ON],
-                label_visibility="collapsed"
-            )
+            # st.session_state.contact_mode = st.selectbox(
+            #     label="",
+            #     options=[ct.CONTACT_MODE_OFF, ct.CONTACT_MODE_ON],
+            #     label_visibility="collapsed"
+            # )
         
+            st.session_state.contact_mode = st.selectbox(
+            label="コンタクトモード", # 意味のあるラベルを付ける
+            options=[ct.CONTACT_MODE_OFF, ct.CONTACT_MODE_ON]   ,
+            label_visibility="collapsed" # 画面上の見た目を変えたくない場合はこれを追加
+            )
+
         st.divider()
 
         st.markdown("**【AIエージェントとは】**")
