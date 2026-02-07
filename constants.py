@@ -51,7 +51,7 @@ FEEDBACK_THANKS_MESSAGE = "ご回答いただき誠にありがとうござい�
 # ==========================================
 # ログ出力系
 # ==========================================
-LOG_DIR_PATH = "./logs"
+# LOG_DIR_PATH = "./logs"
 LOGGER_NAME = "ApplicationLog"
 LOG_FILE = "application.log"
 
@@ -60,6 +60,8 @@ import os
 # 実行ファイルからの相対パスで固定する場合
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_DIR_PATH = os.path.join(BASE_DIR, "logs")
+
+
 
 
 # ==========================================
