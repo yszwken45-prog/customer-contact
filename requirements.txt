@@ -18,3 +18,4 @@ pymupdf
 docx2txt
 slack_sdk
 rank_bm25
+sudachidict_full
