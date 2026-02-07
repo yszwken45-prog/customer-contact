@@ -77,29 +77,67 @@ def initialize_session_id():
         st.session_state.session_id = uuid4().hex
 
 
+# def initialize_logger():
+#     """
+#     ログ出力の設定
+#     """
+#     os.makedirs(ct.LOG_DIR_PATH, exist_ok=True)
+
+#     logger = logging.getLogger(ct.LOGGER_NAME)
+
+#     if logger.hasHandlers():
+#         return
+
+#     log_handler = TimedRotatingFileHandler(
+#         os.path.join(ct.LOG_DIR_PATH, ct.LOG_FILE),
+#         when="D",
+#         encoding="utf8"
+#     )
+#     formatter = logging.Formatter(
+#         f"[%(levelname)s] %(asctime)s line %(lineno)s, in %(funcName)s, session_id={st.session_state.session_id}: %(message)s"
+#     )
+#     log_handler.setFormatter(formatter)
+#     logger.setLevel(logging.INFO)
+#     logger.addHandler(log_handler)
+
+
 def initialize_logger():
     """
     ログ出力の設定
     """
-    os.makedirs(ct.LOG_DIR_PATH, exist_ok=True)
+    # 相対パスを絶対パスに変換して、場所を確実にする
+    log_dir = os.path.abspath(ct.LOG_DIR_PATH)
+    os.makedirs(log_dir, exist_ok=True)
 
     logger = logging.getLogger(ct.LOGGER_NAME)
 
-    if logger.hasHandlers():
-        return
+    # 重要：既存のハンドラがあれば削除（二重出力・競合防止）
+    if logger.handlers:
+        for handler in logger.handlers[:]:
+            logger.removeHandler(handler)
+
+    # ログファイルのフルパス
+    log_filepath = os.path.join(log_dir, ct.LOG_FILE)
 
     log_handler = TimedRotatingFileHandler(
-        os.path.join(ct.LOG_DIR_PATH, ct.LOG_FILE),
+        log_filepath,
         when="D",
         encoding="utf8"
     )
+    
     formatter = logging.Formatter(
-        f"[%(levelname)s] %(asctime)s line %(lineno)s, in %(funcName)s, session_id={st.session_state.session_id}: %(message)s"
+        f"[%(levelname)s] %(asctime)s line %(lineno)s, session_id={st.session_state.get('session_id', 'N/A')}: %(message)s"
     )
     log_handler.setFormatter(formatter)
     logger.setLevel(logging.INFO)
     logger.addHandler(log_handler)
 
+    # デバッグ用：標準出力（コンソール）にも出す設定（不要なら消してOK）
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(formatter)
+    logger.addHandler(stream_handler)
+
+    logger.info("Logger initialized successfully.") # テスト出力
 
 def initialize_agent_executor():
     """
