@@ -158,6 +158,11 @@ def initialize_agent_executor():
     st.session_state.company_doc_chain = utils.create_rag_chain(ct.DB_COMPANY_PATH)
     st.session_state.rag_chain = utils.create_rag_chain(ct.DB_ALL_PATH)
 
+    # 新規追加：それぞれのDBパスから専用のChainを作成
+    st.session_state.design_tech_doc_chain = utils.create_rag_chain(ct.DB_DESIGN_TECH_PATH)
+    st.session_state.compliance_doc_chain = utils.create_rag_chain(ct.DB_COMPLIANCE_PATH)
+    st.session_state.logistics_doc_chain = utils.create_rag_chain(ct.DB_LOGISTICS_PATH)
+
     # Web検索用のToolを設定するためのオブジェクトを用意
     search = SerpAPIWrapper()
     # Agent Executorに渡すTool一覧を用意
@@ -185,6 +190,24 @@ def initialize_agent_executor():
             name = ct.SEARCH_WEB_INFO_TOOL_NAME,
             func=search.run,
             description=ct.SEARCH_WEB_INFO_TOOL_DESCRIPTION
+        ),
+        # 1. デザイン・制作技術リファレンス用のTool
+        Tool(
+            name="search_design_technical_tool",
+            func=utils.run_design_tech_doc_chain, # 対応するchainを別途定義
+            description="デザインの入稿規定（解像度・形式）、印刷技術の仕様、商品の素材詳細や寸法など、制作・技術に関する詳細情報を参照したい時に使う"
+        ),
+        # 2. 規約・ガバナンス参照用のTool
+        Tool(
+            name="search_compliance_policy_tool",
+            func=utils.run_compliance_doc_chain, # 対応するchainを別途定義
+            description="利用規約、プライバシーポリシー、環境認証（エシカル）の基準、株主優待の権利確定条件など、法的・公式なルールを確認したい時に使う"
+        ),
+        # 3. 物流・代行出荷オペレーション用のTool
+        Tool(
+            name="search_logistics_operation_tool",
+            func=utils.run_logistics_doc_chain, # 対応するchainを別途定義
+            description="代行出荷の具体的なフロー、梱包仕様、配送リードタイム、配送料金など、物流実務に関する情報を参照したい時に使う"
         )
     ]
 

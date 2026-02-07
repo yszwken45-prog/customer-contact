@@ -217,6 +217,65 @@ def run_customer_doc_chain(param):
 
     return ai_msg["answer"]
 
+# 1. デザイン・制作技術に関するChain実行関数
+def run_design_tech_doc_chain(param):
+    """
+    デザイン規定、印刷技術、商品スペックに関するデータ参照に特化した関数
+    """
+    # デザイン・技術特化のChainを実行
+    ai_msg = st.session_state.design_tech_doc_chain.invoke({
+        "input": param, 
+        "chat_history": st.session_state.chat_history
+    })
+
+    # 会話履歴への追加
+    st.session_state.chat_history.extend([
+        HumanMessage(content=param), 
+        AIMessage(content=ai_msg["answer"])
+    ])
+
+    return ai_msg["answer"]
+
+
+# 2. 規約・コンプライアンスに関するChain実行関数
+def run_compliance_doc_chain(param):
+    """
+    利用規約、エシカル指針、株主優待ルールなどの公式規定参照に特化した関数
+    """
+    # 規約・コンプライアンス特化のChainを実行
+    ai_msg = st.session_state.compliance_doc_chain.invoke({
+        "input": param, 
+        "chat_history": st.session_state.chat_history
+    })
+
+    # 会話履歴への追加
+    st.session_state.chat_history.extend([
+        HumanMessage(content=param), 
+        AIMessage(content=ai_msg["answer"])
+    ])
+
+    return ai_msg["answer"]
+
+
+# 3. 物流・代行出荷実務に関するChain実行関数
+def run_logistics_doc_chain(param):
+    """
+    出荷フロー、梱包、配送納期などの物流実務データ参照に特化した関数
+    """
+    # 物流実務特化のChainを実行
+    ai_msg = st.session_state.logistics_doc_chain.invoke({
+        "input": param, 
+        "chat_history": st.session_state.chat_history
+    })
+
+    # 会話履歴への追加
+    st.session_state.chat_history.extend([
+        HumanMessage(content=param), 
+        AIMessage(content=ai_msg["answer"])
+    ])
+
+    return ai_msg["answer"]
+
 
 def delete_old_conversation_log(result):
     """

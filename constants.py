@@ -108,8 +108,12 @@ DB_CUSTOMER_PATH = "./.db_customer"
 DB_NAMES = {
     DB_COMPANY_PATH: f"{RAG_TOP_FOLDER_PATH}/company",
     DB_SERVICE_PATH: f"{RAG_TOP_FOLDER_PATH}/service",
-    DB_CUSTOMER_PATH: f"{RAG_TOP_FOLDER_PATH}/customer"
-}
+    DB_CUSTOMER_PATH: f"{RAG_TOP_FOLDER_PATH}/customer",
+    # 新規追加
+    DB_DESIGN_TECH_PATH: f"{RAG_TOP_FOLDER_PATH}/design_tech",
+    DB_COMPLIANCE_PATH: f"{RAG_TOP_FOLDER_PATH}/compliance",
+    DB_LOGISTICS_PATH: f"{RAG_TOP_FOLDER_PATH}/logistics"
+    }
 
 AI_AGENT_MODE_ON = "利用する"
 AI_AGENT_MODE_OFF = "利用しない"
@@ -125,6 +129,16 @@ SEARCH_CUSTOMER_COMMUNICATION_INFO_TOOL_NAME = "search_customer_communication_to
 SEARCH_CUSTOMER_COMMUNICATION_INFO_TOOL_DESCRIPTION = "顧客とのやりとりに関する情報を参照したい時に使う"
 SEARCH_WEB_INFO_TOOL_NAME = "search_web_tool"
 SEARCH_WEB_INFO_TOOL_DESCRIPTION = "自社サービス「HealthX」に関する質問で、Web検索が必要と判断した場合に使う"
+# 新規追加
+SEARCH_DESIGN_TECH_INFO_TOOL_NAME = "search_design_technical_tool"
+SEARCH_DESIGN_TECH_INFO_TOOL_DESCRIPTION = "デザインの入稿規定（解像度・形式）、印刷技術の仕様、商品の素材詳細や寸法など、制作・技術に関する詳細情報を参照したい時に使う"
+SEARCH_COMPLIANCE_POLICY_TOOL_NAME = "search_compliance_policy_tool"
+SEARCH_COMPLIANCE_POLICY_TOOL_DESCRIPTION = "利用規約、プライバシーポリシー、環境認証（エシカル）の基準、株主優待の権利確定条件など、法的・公式なルールを確認したい時に使う"
+        
+SEARCH_LOGISTICS_OPERATION_TOOL_NAME = "search_logistics_operation_tool"
+SEARCH_LOGISTICS_OPERATION_TOOL_DESCRIPTION = "代行出荷の具体的なフロー、梱包仕様、配送リードタイム、配送料金など、物流実務に関する情報を参照したい時に使う"
+
+
 
 
 # ==========================================
