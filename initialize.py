@@ -102,42 +102,40 @@ def initialize_session_id():
 
 
 def initialize_logger():
-    """
-    ログ出力の設定
-    """
-    # 相対パスを絶対パスに変換して、場所を確実にする
-    log_dir = os.path.abspath(ct.LOG_DIR_PATH)
-    os.makedirs(log_dir, exist_ok=True)
+    # 1. フォルダ作成（失敗しても無視して進む）
+    try:
+        os.makedirs(ct.LOG_DIR_PATH, exist_ok=True)
+    except:
+        pass
 
     logger = logging.getLogger(ct.LOGGER_NAME)
-
-    # 重要：既存のハンドラがあれば削除（二重出力・競合防止）
     if logger.handlers:
-        for handler in logger.handlers[:]:
-            logger.removeHandler(handler)
+        logger.handlers.clear()
 
-    # ログファイルのフルパス
-    log_filepath = os.path.join(log_dir, ct.LOG_FILE)
-
-    log_handler = TimedRotatingFileHandler(
-        log_filepath,
-        when="D",
-        encoding="utf8"
-    )
-    
-    formatter = logging.Formatter(
-        f"[%(levelname)s] %(asctime)s line %(lineno)s, session_id={st.session_state.get('session_id', 'N/A')}: %(message)s"
-    )
-    log_handler.setFormatter(formatter)
-    logger.setLevel(logging.INFO)
-    logger.addHandler(log_handler)
-
-    # デバッグ用：標準出力（コンソール）にも出す設定（不要なら消してOK）
+    # 2. 標準出力（コンソール）用の設定を追加
+    # これにより、Streamlit Cloudの「Logs」画面にログが出るようになります
     stream_handler = logging.StreamHandler()
+    formatter = logging.Formatter(
+        f"[%(levelname)s] %(asctime)s session_id={st.session_state.get('session_id', 'N/A')}: %(message)s"
+    )
     stream_handler.setFormatter(formatter)
     logger.addHandler(stream_handler)
 
-    logger.info("Logger initialized successfully.") # テスト出力
+    # 3. ファイル出力の設定（念のため残す）
+    try:
+        log_handler = TimedRotatingFileHandler(
+            os.path.join(ct.LOG_DIR_PATH, ct.LOG_FILE),
+            when="D",
+            encoding="utf8"
+        )
+        log_handler.setFormatter(formatter)
+        logger.addHandler(log_handler)
+    except Exception as e:
+        # クラウド環境などでファイルが作れなくても、ここでのエラーは無視する
+        logger.warning(f"File log failed: {e}")
+
+    logger.setLevel(logging.INFO)
+    logger.info("Logger initialized (Stream + File)")
 
 def initialize_agent_executor():
     """
